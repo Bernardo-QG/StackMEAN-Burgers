@@ -1,1 +1,0 @@
-# StackMEAN-Burgers
