@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/burgers-db',{
+const _local ='mongodb://localhost/burgers-db';
+const _remoto = 'mongodb://bqg:1234@34.230.33.186:27017/burgers-db?authSource=admin';
+
+mongoose.connect(_local,{
     useCreateIndex:true,
     useNewUrlParser:true,
     useFindAndModify:false
