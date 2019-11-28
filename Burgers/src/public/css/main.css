@@ -10,3 +10,13 @@
 .logo{
     width: 60%;
 }
+
+.colorCarrusel{
+    color: whitesmoke;
+    background: rgba(0, 0, 0, 0.425);
+}
+.miimg {
+   
+    height: 300px;
+    object-fit: cover;
+}
