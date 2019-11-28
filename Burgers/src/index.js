@@ -9,7 +9,7 @@ const passport = require('passport');
 // Initializations
 const app = express();
 require('./database');
-//require('./config/passport');
+require('./config/passport');
 
 // Settings
 app.set('port',process.env.PORT || 3000);
