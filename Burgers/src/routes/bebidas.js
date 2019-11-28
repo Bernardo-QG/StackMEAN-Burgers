@@ -1,6 +1,6 @@
 const express = require('express');
 const router=express.Router();
-const Bebida = require('../models/Bebida');
+//const Bebida = require('../models/Bebida');
 
 const { isAuthenticated } = require('../helpers/auth');
 
