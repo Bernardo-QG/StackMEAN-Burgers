@@ -1,64 +1,62 @@
 const express = require('express');
 const router=express.Router();
-//const Bebida = require('../models/Bebida');
+const Bebida = require('../models/Bebida');
 
-const { isAuthenticated } = require('../helpers/auth');
+//const { isAuthenticated } = require('../helpers/auth');
 
-// Nueva bebid
-router.get('/Bebidas/agregar', isAuthenticated, (req, res) => {
+// Nueva bebida
+router.get('/Bebidas/agregar', (req, res) => {
   res.render('Bebidas/bebida-nueva');
 });
 
-router.post('/Bebidas/bebida-nueva', isAuthenticated, async (req, res) => {
-  const { title, description } = req.body;// cambiar todo el cuerpo 
+router.post('/Bebidas/bebida-nueva',(req, res) => {
+  const { name } = req.body;
   const errors = [];
-  if (!title) {
+  if (!title, price) {
     errors.push({text: 'Ingresa un nombre'});
   }
-  if (!description) {
-    errors.push({text: 'Ingresa el sabor'});
-  }
+
   if (errors.length > 0) {
-    res.render('Bebidas/bebida-nueva', {// cambair el curtpo de lo que pide ejemplo ingredientes nombre y precio
+    res.render('Bebidas/bebida-nueva', {
       errors,
-      title,
-      description
+      name,
+      price
     });
   } else {
-    const newBebida = new Bebida({title, description});// cambair a sus caracteristicas 
-    newBebida.user = req.user.id;
-    await newBebida.save();
+    const newBebida = new Bebida({ name }); 
+    newBebida.bebida = req.bebida.id;
+     newBebida.save();
     req.flash('success_msg', 'Bebida agregado con exito');
     res.redirect('/Bebidas');
   }
 });
 
-// Get All Notes
-router.get('/Bebidas', isAuthenticated, async (req, res) => {
-  const bebida = await Bebida.find({user: req.user.id}).sort({date: 'desc'});
+// Todas las bebidas
+router.get('/Bebidas', (req, res) => {
+  const bebida = Bebida.find({bebida: req.bebida.id}).sort({date: 'desc'});
   res.render('Bebidas/Surtido', { bebida });
 });
 
-// Edit Notes
-router.get('/Bebidas/edit/:id', isAuthenticated, async (req, res) => {
-  const bebida = await Bebida.findById(req.params.id);
-  if(bebida.user != req.user.id) {
+// Edit Bebida
+router.get('/Bebidas/edit/:id', (req, res) => {
+  const bebida =  Bebida.findById(req.params.id);
+  if(bebida.bebida != req.bebida.id) {
     req.flash('error_msg', 'Not Authorized');
     return res.redirect('/Bebidas');
   } 
   res.render('Bebidas/editar-Bebida', { bebida });
 });
 
-router.put('/Bebidas/editar-Bebida/:id', isAuthenticated, async (req, res) => {
-  const { title, description } = req.body;//cambiar cuerpo
-  await Bebida.findByIdAndUpdate(req.params.id, {title, description});//cambiar cuerpo
+router.put('/Bebidas/editar-Bebida/:id', (req, res) => {
+  const { name, price } = req.body;
+   Bebida.findByIdAndUpdate(req.params.id, {name, price});
   req.flash('success_msg', 'Bebida Actualizada con exito');
   res.redirect('/Bebidas');
 });
 
-// Delete Notes
-router.delete('/Bebidass/eliminar/:id', isAuthenticated, async (req, res) => {
-  await Bebida.findByIdAndDelete(req.params.id);
+// Delete Bebida
+router.delete('/Bebidass/eliminar/:id', (req, res) => {
+   Bebida.findByIdAndDelete(req.params.id);
   req.flash('success_msg', 'Bebida eliminada con exito');
   res.redirect('/Bebidas');
 });

@@ -1,6 +1,6 @@
 const express = require('express');
 const router=express.Router();
-//const Alimento = require('../models/Alimento');// agrgarr archibo .js de alimento en models 
+const Alimento = require('../models/Alimento');// agrgarr archibo .js de alimento en models 
 
 //const { isAuthenticated } = require('../helpers/auth');
 
@@ -9,7 +9,7 @@ router.get('/Alimentos/add',  (req, res) => {
   res.render('Alimentos/alimento-nuevo');
 });
 
-router.post('/Alimentos/alimento-nuevo',  async (req, res) => {
+router.post('/Alimentos/alimento-nuevo', (req, res) => {
   const { title, description } = req.body;// cambiar todo el cuerpo 
   const errors = [];
   if (!title) {
@@ -27,22 +27,22 @@ router.post('/Alimentos/alimento-nuevo',  async (req, res) => {
   } else {
     const newAlimento = new Alimento({title, description});// cambair a sus caracteristicas 
     newAlimento.user = req.user.id;
-    await newAlimento.save();
+     newAlimento.save();
     req.flash('success_msg', 'Alimento agregado con exito');
     res.redirect('/Alimentos');
   }
 });
 
-// Get All Notes
+// Todos los alimentos 
 router.get('/Alimentos',  async (req, res) => {
-  const alimento = await Alimento.find({user: req.user.id}).sort({date: 'desc'});
+  const alimento =  Alimento.find({alimento: req.alimento.id}).sort({date: 'desc'});
   res.render('Alimentos/Surtido', { alimento });
 });
 
-// Edit Notes
+// Editar alimento
 router.get('/Alimentos/edit/:id', async (req, res) => {
-  const alimento = await Alimento.findById(req.params.id);
-  if(alimento.user != req.user.id) {
+  const alimento =  Alimento.findById(req.params.id);
+  if(alimento.alimento != req.alimento.id) {
     req.flash('error_msg', 'Not Authorized');
     return res.redirect('/Alimentos');
   } 
@@ -50,15 +50,15 @@ router.get('/Alimentos/edit/:id', async (req, res) => {
 });
 
 router.put('/Alimentos/editar-Alimento/:id', async (req, res) => {
-  const { title, description } = req.body;//cambiar cuerpo
-  await Alimento.findByIdAndUpdate(req.params.id, {title, description});//cambiar cuerpo
+  const { name, ingredints, price } = req.body;//cambiar cuerpo
+  Alimento.findByIdAndUpdate(req.params.id, {name, ingredints, price});//cambiar cuerpo
   req.flash('success_msg', 'Alimento Actualizado con exito');
   res.redirect('/Alimentos');
 });
 
 // Delete Notes
 router.delete('/Alimentos/eliminar/:id',  async (req, res) => {
-  await Alimento.findByIdAndDelete(req.params.id);
+  Alimento.findByIdAndDelete(req.params.id);
   req.flash('success_msg', 'Alimento eliminado con exito');
   res.redirect('/Alimentos');
 });
