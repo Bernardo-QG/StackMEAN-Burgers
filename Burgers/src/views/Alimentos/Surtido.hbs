@@ -1,1 +1,29 @@
-<h1>hola</h1>
+<div class="row">
+    {{#each alimentos}}
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title d-flex justify-content-between align-items-center">
+                        {{name}} <a href="/Alimentos/edit/{{_id}}"><i class="fas fa-edit"></i></a>
+                    </h4>
+                    <p>{{ingredients}}</p>
+                    <form action="/Alimentos/delete/{{_id}}?_method=DELETE" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger btn-block btn-sm" type="submit">
+                        <i class="fas fa-trash-alt"></i>Eliminar
+                        </button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    {{else}}
+        <div class="card mx-auto">
+            <div class="card-body">
+                <h1>Bienvenido {{user.name}}</h1>
+                <p class="lead">No hay Alimentos</p>
+                <a href="/Alimentos/add"  class="btn btn-success btn-block">Agregar Alimento!</a>
+            </div>
+        </div>    
+    {{/each}}
+</div>

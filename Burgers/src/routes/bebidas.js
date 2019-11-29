@@ -5,7 +5,7 @@ const Bebida = require('../models/Bebida');
 //const { isAuthenticated } = require('../helpers/auth');
 
 // Nueva bebida
-router.get('/Bebidas/agregar', (req, res) => {
+router.get('/Bebidas/add', (req, res) => {
   res.render('Bebidas/bebida-nueva');
 });
 
