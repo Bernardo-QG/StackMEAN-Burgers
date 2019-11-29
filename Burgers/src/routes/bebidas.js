@@ -24,7 +24,7 @@ router.post('/Bebidas/bebida-nueva',(req, res) => {
     });
   } else {
     const newBebida = new Bebida({ name }); 
-    newBebida.bebida = req.bebida.id;
+    newBebida.bebida = req.bebida;//.id;
      newBebida.save();
     req.flash('success_msg', 'Bebida agregado con exito');
     res.redirect('/Bebidas');
@@ -33,14 +33,14 @@ router.post('/Bebidas/bebida-nueva',(req, res) => {
 
 // Todas las bebidas
 router.get('/Bebidas', (req, res) => {
-  const bebida = Bebida.find({bebida: req.bebida.id}).sort({date: 'desc'});
+  const bebida = Bebida.find({bebida: req.bebida/*.id*/}).sort({date: 'desc'});
   res.render('Bebidas/Surtido', { bebida });
 });
 
 // Edit Bebida
 router.get('/Bebidas/edit/:id', (req, res) => {
-  const bebida =  Bebida.findById(req.params.id);
-  if(bebida.bebida != req.bebida.id) {
+  const bebida =  Bebida.findById(req.params/*.id*/);
+  if(bebida.bebida != req.bebida/*.id*/) {
     req.flash('error_msg', 'Not Authorized');
     return res.redirect('/Bebidas');
   } 
@@ -49,14 +49,14 @@ router.get('/Bebidas/edit/:id', (req, res) => {
 
 router.put('/Bebidas/editar-Bebida/:id', (req, res) => {
   const { name, price } = req.body;
-   Bebida.findByIdAndUpdate(req.params.id, {name, price});
+   Bebida.findByIdAndUpdate(req.params/*.id*/, {name, price});
   req.flash('success_msg', 'Bebida Actualizada con exito');
   res.redirect('/Bebidas');
 });
 
 // Delete Bebida
 router.delete('/Bebidass/eliminar/:id', (req, res) => {
-   Bebida.findByIdAndDelete(req.params.id);
+   Bebida.findByIdAndDelete(req.params/*.id*/);
   req.flash('success_msg', 'Bebida eliminada con exito');
   res.redirect('/Bebidas');
 });
