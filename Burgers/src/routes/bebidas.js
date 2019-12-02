@@ -10,12 +10,14 @@ router.get('/Bebidas/add', (req, res) => {
 });
 
 router.post('/Bebidas/bebida-nueva',(req, res) => {
-  const { name } = req.body;
+  const { name, price } = req.body;
   const errors = [];
-  if (!title, price) {
+  if (!name) {
     errors.push({text: 'Ingresa un nombre'});
   }
-
+  if (!price) {
+    errors.push({text: 'Ingresa un precio'});
+  }
   if (errors.length > 0) {
     res.render('Bebidas/bebida-nueva', {
       errors,
@@ -23,7 +25,7 @@ router.post('/Bebidas/bebida-nueva',(req, res) => {
       price
     });
   } else {
-    const newBebida = new Bebida({ name }); 
+    const newBebida = new Bebida({ name, price }); 
     newBebida.bebida = req.bebida;//.id;
      newBebida.save();
     req.flash('success_msg', 'Bebida agregado con exito');
@@ -34,6 +36,7 @@ router.post('/Bebidas/bebida-nueva',(req, res) => {
 // Todas las bebidas
 router.get('/Bebidas', (req, res) => {
   const bebida = Bebida.find({bebida: req.bebida/*.id*/}).sort({date: 'desc'});
+  //const bebida = Bebida.find().sort({date: 'desc'});
   res.render('Bebidas/Surtido', { bebida });
 });
 
