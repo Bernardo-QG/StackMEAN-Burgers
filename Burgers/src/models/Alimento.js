@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const {Schema} = mongoose;
 
-const AlimentoSchema = Schema({
-    name:{type:String, require:true},
-    ingredients: {type: String, require:true},
-    price: {type: Number, require: true},
-    date:{type:Date,default: Date.now}
+const AlimentoSchema = new Schema({
+    name:{type:String, required:true},
+    ingredients:{type:String,required:true},
+    price:{type:String,required:true},
+    date:{type: Date,default: Date.now}
 });
 
-module.exports=mongoose.model('Alimento',AlimentoSchema);
+module.exports = mongoose.model('Alimento',AlimentoSchema);
