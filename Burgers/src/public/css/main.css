@@ -23,4 +23,5 @@
 .ingredientes{
     font-size: 12px;
     color: grey;
+    word-wrap: break-word;
 }
