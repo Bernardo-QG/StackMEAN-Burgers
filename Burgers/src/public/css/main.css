@@ -20,3 +20,8 @@
     height: 300px;
     object-fit: cover;
 }
+.ingredientes{
+    font-size: 12px;
+    color: grey;
+    word-wrap: break-word;
+}
