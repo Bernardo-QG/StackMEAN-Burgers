@@ -3,7 +3,7 @@ const {Schema} = mongoose;
 
 const BebidaSchema = Schema({
     name:{type: String, require: true},
-    price: {type1: String, require: true},
+    price: {type: String, require: true},
     date:{type: Date,default: Date.now}
 });
 

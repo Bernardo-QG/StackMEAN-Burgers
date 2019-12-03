@@ -2,6 +2,7 @@ const express = require('express');
 const router=express.Router();
 const Alimento = require('../models/Alimento');
 
+//nuevo alimento
 router.get('/Alimentos', async (req, res) => {
   const alimento = await Alimento.find().sort({date: 'desc'});
   res.render('alimentos/Surtido',{alimento});
@@ -12,25 +13,53 @@ router.get('/Alimentos/add', (req, res) => {
 });
 
 router.post('/Alimentos/alimento-nuevo', (req, res) => {
-  const { name, ingredients, price} = req.body;// cambiar todo el cuerpo 
+  const { name, ingredients, price} = req.body; 
   const errors = [];
   if (!name)   errors.push({text: 'Ingresa un nombre'});
   if (!ingredients)   errors.push({text: 'Ingresa un ingredients'});
   if (!price)   errors.push({text: 'Ingresa un price'});
 
   if (errors.length > 0) {
-    res.render('alimentos/alimento-nuevo', {// cambair el curtpo de lo que pide ejemplo ingredientes nombre y precio
+    res.render('alimentos/alimento-nuevo', {
       errors, name, ingredients,price
     });
   } else {
-    const newAlimento = new Alimento({name, ingredients,price });// cambair a sus caracteristicas 
+    const newAlimento = new Alimento({name, ingredients,price });
     newAlimento.save();
     req.flash('success_msg', 'Alimento agregado con exito');
     res.redirect('/Alimentos');
   }
 });
 
+// Todos los alimentos 
+router.get('/Alimentos',  async (req, res) => {
+  const alimento = await Alimento.find().sort({date: 'desc'});
+  res.render('Alimentos/Surtido', { alimento });
+});
 
+// Editar alimento
 
+router.get('/Alimentos/edit/:id', async (req, res) => {
+  const alimento = await Alimento.findById(req.params.id);
+  if(Alimento.user != req.user) {
+    req.flash('error_msg', 'Not Authorized');
+    return res.render('/Alimentos');
+  } 
+  res.render('Alimentos/editar-Alimento', { alimento });
+});
+
+router.put('/Alimentos/editar-Alimento/:id', async (req, res) => {
+  const { name, ingredints, price } = req.body;
+  await Alimento.findByIdAndUpdate(req.params.id, {name, ingredints, price});
+  req.flash('success_msg', 'Alimento Actualizado con exito');
+  res.redirect('/Alimentos');
+});
+
+// Eliminar Alimento 
+router.delete('/Alimentos/delete/:id', async (req, res) => {
+  await Alimento.findByIdAndDelete(req.params.id);
+  req.flash('success_msg', 'Alimento eliminado con exito');
+  res.redirect('/Alimentos');
+});
 
 module.exports=router;
