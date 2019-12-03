@@ -49,8 +49,8 @@ router.get('/Alimentos/edit/:id', async (req, res) => {
 });
 
 router.put('/Alimentos/editar-Alimento/:id', async (req, res) => {
-  const { name, ingredints, price } = req.body;
-  await Alimento.findByIdAndUpdate(req.params.id, {name, ingredints, price});
+  const { name, ingredients, price } = req.body;
+  await Alimento.findByIdAndUpdate(req.params.id, {name, ingredients, price});
   req.flash('success_msg', 'Alimento Actualizado con exito');
   res.redirect('/Alimentos');
 });
