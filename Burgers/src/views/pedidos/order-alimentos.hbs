@@ -1,49 +1,52 @@
-<div class="mx-auto row">
-    <div class="container col-sm-8">
-              <h3>Alimentos</h3>
-              <table class="table">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th class="col-2" scope="col">Nombre</th>
-                      <th class="col-1" scope="col">Precio</th>
-                      <th class="col-1"scope="col">Cantidad</th>                      
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {{#each alimentos}}
-                      <tr>                      
-                        <th scope="row">
-                            <div class="column">
-                                <div>{{name}}</div>
-                                <div class="ingredientes">{{ingredients}}</div>
-                            </div>
-                        </th>
-                        <td>{{price}}</td>
-                        <td> <input type="number" name="quantity" placeholder="0" style="width: 70%" value=""> </td>
+<form action="/pedidos/order-alimentos" method="POST">
+  <div class="mx-auto ">
+                <h3 class="text-center">Alimentos</h3>
+     
+      
+                    <button class="float-right btn btn-success"  type="submit">
+                      Continuar &nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i>
+                    </button>
+                    
+                    </div>
+                     <br>
+                     <br>
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th class="col-2" scope="col">Nombre</th>
+                        <th class="col-1" scope="col">Precio</th>
+                        <th class="col-1"scope="col">Cantidad</th>                      
                       </tr>
-                    {{else}}
-                      <tr>                      
-                        <th scope="row">
-                            <div class="column">
-                                <div>No hay Alimentos</div>
-                                <div class="ingredientes">Ingrese nuevos alimentos</div>
-                            </div>
-                        </th>
-                        <td>#</td>
-                        <td><a href="/Alimentos/add" class="btn btn-success btn-block btn-sm">Agregar alimento</a>
-                         </td>
-                      </tr>
-                    {{/each}}
-                  </tbody>
-            </table>
-    </div>
-    
-    <div class="col container col-sm-4">
-        <h3>Acciones</h3>
-       
-        <a href="/pedidos/add/bebidas" class="btn btn-primary btn-block btn-sm">Bebidas &nbsp;&nbsp;&nbsp;<i class="fas fa-beer"></i></a>
-        <a href="/pedidos/add" class="btn btn-success btn-block btn-sm">Continuar &nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i></a>
-       
+                    </thead>
+                    <tbody>
+                      {{#each alimentos}}
+                        <tr>                      
+                          <th scope="row">
+                              <div class="column">
+                                  <div>{{name}}</div>
+                                  <div class="ingredientes">{{ingredients}}</div>
+                              </div>
+                          </th>
+                          <td>{{price}}</td>
+                          <td> <input type="number" name="{{_id}}" placeholder="0" style="width: 70%" value=""> </td>
+                        </tr>
+                      {{else}}
+                        <tr>                      
+                          <th scope="row">
+                              <div class="column">
+                                  <div>No hay Alimentos</div>
+                                  <div class="ingredientes">Ingrese nuevos alimentos</div>
+                              </div>
+                          </th>
+                          <td>#</td>
+                          <td><a href="/Alimentos/add" class="btn btn-success btn-block btn-sm">Agregar alimento</a>
+                          </td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+              </table>
+      
+      
+  
 
-    </div>
-</div>
+</form>

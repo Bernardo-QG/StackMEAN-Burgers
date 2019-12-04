@@ -16,8 +16,8 @@ router.post('/Alimentos/alimento-nuevo', (req, res) => {
   const { name, ingredients, price} = req.body; 
   const errors = [];
   if (!name)   errors.push({text: 'Ingresa un nombre'});
-  if (!ingredients)   errors.push({text: 'Ingresa un ingredients'});
-  if (!price)   errors.push({text: 'Ingresa un price'});
+  if (!ingredients)   errors.push({text: 'Ingresa ingredientes'});
+  if (!price)   errors.push({text: 'Ingresa un precio'});
 
   if (errors.length > 0) {
     res.render('alimentos/alimento-nuevo', {

@@ -1,0 +1,51 @@
+<form action="/pedidos/order-bebidas" method="POST">
+  <div class="mx-auto ">
+                <h3 class="text-center">Bebidas</h3>
+     
+      
+                    <button class="float-right btn btn-success"  type="submit">
+                      Continuar &nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i>
+                    </button>
+                    
+                    </div>
+                     <br>
+                     <br>
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th class="col-2" scope="col">Nombre</th>
+                        <th class="col-1" scope="col">Precio</th>
+                        <th class="col-1"scope="col">Cantidad</th>                      
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each bebidas}}
+                        <tr>                      
+                          <th scope="row">
+                              <div class="column">
+                                  {{name}}                                  
+                              </div>
+                          </th>
+                          <td>{{price}}</td>
+                          <td> <input type="number" name="{{_id}}" placeholder="0" style="width: 70%" value=""> </td>
+                        </tr>
+                      {{else}}
+                        <tr>                      
+                          <th scope="row">
+                              <div class="column">
+                                  <div>No hay Bebidas</div>
+                                  <div class="ingredientes">Ingrese nuevas bebidas</div>
+                              </div>
+                          </th>
+                          <td>#</td>
+                          <td><a href="/Bebidas/add" class="btn btn-success btn-block btn-sm">Agregar bebida</a>
+                          </td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+              </table>
+      
+      
+  
+
+</form>
