@@ -7,11 +7,11 @@ const {isAuthenticated} = require('../helpers/auth');
 //nuevo alimento
 router.get('/Alimentos', isAuthenticated,async (req, res) => {
   const alimento = await Alimento.find().sort({date: 'desc'});
-  res.render('alimentos/Surtido',{alimento});
+  res.render('Alimentos/Surtido',{alimento});
 });
 
 router.get('/Alimentos/add', isAuthenticated,(req, res) => {
-  res.render('alimentos/alimento-nuevo');
+  res.render('Alimentos/alimento-nuevo');
 });
 
 router.post('/Alimentos/alimento-nuevo',isAuthenticated, async (req, res) => {
@@ -23,7 +23,7 @@ router.post('/Alimentos/alimento-nuevo',isAuthenticated, async (req, res) => {
   if (!price)   errors.push({text: 'Ingresa un precio'});
 
   if (errors.length > 0) {
-    res.render('alimentos/alimento-nuevo', {
+    res.render('Alimentos/alimento-nuevo', {
       errors, name, ingredients,price
     });
   } else {
