@@ -17,22 +17,22 @@
     </ul>
  
     <ul class="navbar-nav ml-auto">
-         <li class="nav-item dropdown">
+         
+      {{#if user}}
+       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Service
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="/Alimentos">Foods</a>
             <a class="dropdown-item" href="/Bebidas">Drinks</a>
-            <a class="dropdown-item" href="/">Orders</a>
+            <a class="dropdown-item" href="/pedidos">Orders</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/">Sign OUT</a>
+            <a class="dropdown-item" href="/users/logout">Sign OUT</a>
             
 
           </div>
         </li>
-      {{#if user}}
-       
       {{else}}
         <li class="nav-item">
             
