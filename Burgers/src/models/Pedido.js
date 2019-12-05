@@ -4,6 +4,7 @@ const {Schema} = mongoose;
 
 const ElementoSchema = new Schema({
     idElemento:{type:String,required:true},
+    Nombre:{type:String,required:true},
     Cantidad:{type:String,required:true},
     Precio:{type:String,required:true}, 
 });

@@ -3,3 +3,5 @@ npm i express express-handlebars express-session methods-override mongoose passp
 node src/index.js
 
 npm i nodemon -D
+
+db.dropDatabase();

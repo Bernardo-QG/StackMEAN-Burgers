@@ -3,12 +3,13 @@ const router=express.Router();
 const Alimento = require('../models/Alimento');
 const Bebida = require('../models/Bebida');
 const Pedido = require('../models/Pedido');
+const {isAuthenticated} = require('../helpers/auth');
 var pedido=[];
 var Total=0;
 
 
 //Pagina inicio de pedidos
-router.get('/pedidos',async(req,res)=>{    
+router.get('/pedidos',isAuthenticated,async(req,res)=>{    
     pedido=[];
     Total=0;
     const pedidos = await Pedido.find().sort({date: 'desc'});
@@ -18,16 +19,16 @@ router.get('/pedidos',async(req,res)=>{
 
 
 // Agregar pedido
-router.get('/pedidos/add',(req,res)=>{
+router.get('/pedidos/add',isAuthenticated,(req,res)=>{
     res.render('pedidos/new-order');    
 });
 
-router.get('/pedidos/add/alimentos',async(req,res)=>{
+router.get('/pedidos/add/alimentos',isAuthenticated,async(req,res)=>{
     const alimentos = await Alimento.find().sort({date: 'desc'});
     res.render('pedidos/order-alimentos',{alimentos});    
 });
 
-router.post('/pedidos/order-alimentos', async(req,res)=>{
+router.post('/pedidos/order-alimentos',isAuthenticated, async(req,res)=>{
     //console.log(req.body);
     const yey = req.body;
 
@@ -39,18 +40,18 @@ router.post('/pedidos/order-alimentos', async(req,res)=>{
         }
         //console.log("En el índice '" + indice + "' hay este valor: " + yey[indice]);
     }
-   
+  
     res.render('pedidos/new-order',{pedido,Total});
     
 });
 
 
-router.get('/pedidos/add/bebidas',async(req,res)=>{
+router.get('/pedidos/add/bebidas',isAuthenticated,async(req,res)=>{
     const bebidas = await Bebida.find().sort({date: 'desc'});
     res.render('pedidos/order-bebidas',{bebidas});    
 });
 
-router.post('/pedidos/order-bebidas', async(req,res)=>{
+router.post('/pedidos/order-bebidas',isAuthenticated, async(req,res)=>{
     const yey = req.body;
     for (var indice in yey) {
         if(yey[indice]!="" && yey[indice]>0){
@@ -60,18 +61,19 @@ router.post('/pedidos/order-bebidas', async(req,res)=>{
         }
         //console.log("En el índice '" + indice + "' hay este valor: " + yey[indice]);
     }
-   
+    
             res.render('pedidos/new-order',{pedido,Total});
     
 });
 
-router.post('/pedidos/add/enviar', async(req,res)=>{
+router.post('/pedidos/add/enviar',isAuthenticated, async(req,res)=>{
     if(pedido.length>0){
         var Elementos=[];
         for(var i in pedido){
-            Elementos.push({idElemento:pedido[i]["miid"],Cantidad:pedido[i]["micantidad"],Precio:pedido[i]["miprice"]});
+            Elementos.push({idElemento:pedido[i]["miid"],Nombre:pedido[i]["minombre"],Cantidad:pedido[i]["micantidad"],Precio:pedido[i]["miprice"]});
         }  
         const idPedido = await Pedido.distinct('idPedido').count();
+       
         const newPedido=new Pedido({idPedido,Elementos,Total});
             //newNote.user=req.user.id;
         await newPedido.save();
@@ -89,13 +91,6 @@ router.post('/pedidos/add/enviar', async(req,res)=>{
     
 });
 
-
-
-
-
-router.get('/pedidos/edit',(req,res)=>{
-    res.render('pedidos/edit-order');
-});
 
 
 

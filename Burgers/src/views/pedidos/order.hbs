@@ -7,7 +7,59 @@
     <div class="col container col-sm-4">               
         <a href="/pedidos/add/" class="btn btn-success btn-block btn-sm">Agregar pedido &nbsp;&nbsp;&nbsp;<i class="fas fa-utensils"></i></a>      
     </div>
-    <div>
+
+    <div class="accordion" id="accordionExample" style="width:100%;">
+        {{#each pedidos}}
+            <div class="card">
+                <div class="card-header row" id="heading{{idPedido}}">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse{{idPedido}}" aria-expanded="false" aria-controls="collapse{{idPedido}}">
+                            <i class="fas fa-plus" style="font-size: 20px;"></i>
+                    </button>
+                    <h4> #{{idPedido}} - Total ${{Total}}</h4>
+                        
+                </div>
+                <div id="collapse{{idPedido}}" class="collapse" aria-labelledby="heading{{idPedido}}" data-parent="#accordionExample">
+                <div class="card-body">
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">$</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each Elementos}}
+                                <tr>
+                                <th scope="row">{{Nombre}}</th>
+                                <td>{{Cantidad}}</td>
+                                <td>{{Precio}}</td>
+                                </tr>
+
+                            {{/each}}
+                            {{#if Elementos}}                
+                               
+                            {{else}}
+                                <tr>
+                                <th scope="row">-</th>
+                                <td>-</td>
+                                <td>-</td>
+                                </tr>
+
+                            {{/if}}
+                            
+                            
+                            </tbody>
+                        </table>      
+                </div>
+                </div>
+            </div>
+         {{/each}}
        
-    </div>
+        </div>
+    
+            
+           
+   
 </div>
