@@ -1,9 +1,18 @@
-FROM node:10
-WORKDIR /app
-COPY package.json /app
+FROM node:12-alpine
+
+RUN mkdir -p /home/ec2-user/StackMEAN-Burgers/Burgers/node_modules && chown -R node:node /home/ec2-user/StackMEAN-Burgers/Burgers
+
+WORKDIR /home/ec2-user/StackMEAN-Burgers/Burgers
+
+COPY package*.json ./
+
+USER node
+
 RUN npm install
-COPY . /app
-CMD npm run dev
+
+COPY --chown=node:node . .
+
 EXPOSE 3000
 
+CMD [ "node", "src/index.js" ]
 
