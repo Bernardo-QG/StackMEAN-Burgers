@@ -43,18 +43,14 @@ router.get('/Alimentos', isAuthenticated, async (req, res) => {
 
 // Editar alimento
 
-router.get('/Alimentos/edit/:id', isAuthenticated,async (req, res) => {
+
+router.get('/Alimentos/edit/:id', isAuthenticated, async (req, res) => {
   const alimento = await Alimento.findById(req.params.id);
-  if(Alimento.user != req.user) {
-    req.flash('error_msg', 'Not Authorized');
-    return res.render('/Alimentos');
-  } 
   res.render('Alimentos/editar-Alimento', { alimento });
 });
 
-router.put('/Alimentos/editar-Alimento/:id',isAuthenticated, async (req, res) => {
+router.put('/Alimentos/editar-Alimento/:id', isAuthenticated, async (req, res) => {
   const { name, ingredients, price } = req.body;
- 
   await Alimento.findByIdAndUpdate(req.params.id, {name, ingredients, price});
   req.flash('success_msg', 'Alimento Actualizado con exito');
   res.redirect('/Alimentos');
