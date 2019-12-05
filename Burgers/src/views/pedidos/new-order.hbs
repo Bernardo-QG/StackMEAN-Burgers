@@ -1,8 +1,20 @@
-<div class="mx-auto">
-   
 
-   </button>
-   
+<script>
+    $(document).ready(function(){
+      $("#btnSendPedido").click(function(){
+        $.post("/pedidos/add/enviar",
+        {
+          name: "Bernardo",
+          nime: "serivenestasvariablesXD"
+        },
+        function(){
+          window.location.replace("/pedidos");
+        });
+      });
+    });
+</script>
+<div class="mx-auto">  
+   </button>   
         <h3>Pedido</h3>
         <div class="row">
             <div class="col container">
@@ -21,6 +33,14 @@
                   <td>{{micantidad}}</td>
                   <td>{{miprice}}</td>
                 </tr>
+
+                {{/each}}
+                {{#if pedido}}                
+                <tr style="color: blue;">
+                  <th scope="row">Total</th>
+                  <td>#</td>
+                  <td>{{Total}}</td>
+                </tr>
                 {{else}}
                 <tr>
                   <th scope="row">-</th>
@@ -28,15 +48,16 @@
                   <td>-</td>
                 </tr>
 
-                {{/each}}
+                {{/if}}
+                
                   
                 </tbody>
               </table>
             </div>
             <div class="col container col-md-4">
                   <a href="/pedidos/add/alimentos" class="btn btn-primary btn-block btn-sm">Alimentos &nbsp;&nbsp;&nbsp;<i class="fas fa-hamburger"></i></a>
-                  <a href="/pedidos/add/bebidas" class="btn btn-primary btn-block btn-sm">Bebidas &nbsp;&nbsp;&nbsp;<i class="fas fa-beer"></i></a>
-                  <a href="/pedidos/add/enviar" class="btn btn-success btn-block btn-sm">Enviar pedido &nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="/pedidos/add/bebidas"  class="btn btn-primary btn-block btn-sm">Bebidas &nbsp;&nbsp;&nbsp;<i class="fas fa-beer"></i></a>
+                  <button id="btnSendPedido" class="btn btn-success btn-block btn-sm">Enviar pedido &nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i></button>
                   <a href="/pedidos/" class="btn btn-danger btn-block btn-sm">Cancelar &nbsp;&nbsp;&nbsp;<i class="fas fa-ban"></i></a>      
             </div>
         </div>      

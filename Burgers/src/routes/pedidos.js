@@ -2,15 +2,22 @@ const express = require('express');
 const router=express.Router();
 const Alimento = require('../models/Alimento');
 const Bebida = require('../models/Bebida');
+const Pedido = require('../models/Pedido');
 var pedido=[];
+var Total=0;
 
 
-router.get('/pedidos',(req,res)=>{    
+//Pagina inicio de pedidos
+router.get('/pedidos',async(req,res)=>{    
     pedido=[];
-    res.render('pedidos/order');
+    Total=0;
+    const pedidos = await Pedido.find().sort({date: 'desc'});
+    console.log(pedidos)
+    res.render('pedidos/order',{pedidos});
 });
 
 
+// Agregar pedido
 router.get('/pedidos/add',(req,res)=>{
     res.render('pedidos/new-order');    
 });
@@ -28,11 +35,12 @@ router.post('/pedidos/order-alimentos', async(req,res)=>{
         if(yey[indice]!="" && yey[indice]>0){
             const mialimento = await Alimento.find({_id:indice});
             pedido.push({miid:indice, minombre: mialimento[0]["name"],micantidad:yey[indice],miprice:mialimento[0]["price"]*yey[indice]});
+            Total=Total+mialimento[0]["price"]*yey[indice];
         }
         //console.log("En el índice '" + indice + "' hay este valor: " + yey[indice]);
     }
    
-            res.render('pedidos/new-order',{pedido});
+    res.render('pedidos/new-order',{pedido,Total});
     
 });
 
@@ -48,19 +56,45 @@ router.post('/pedidos/order-bebidas', async(req,res)=>{
         if(yey[indice]!="" && yey[indice]>0){
             const mibebida = await Bebida.find({_id:indice});
             pedido.push({miid:indice, minombre: mibebida[0]["name"],micantidad:yey[indice],miprice:mibebida[0]["price"]*yey[indice]});
+            Total=Total+mibebida[0]["price"]*yey[indice];
         }
         //console.log("En el índice '" + indice + "' hay este valor: " + yey[indice]);
     }
    
-            res.render('pedidos/new-order',{pedido});
+            res.render('pedidos/new-order',{pedido,Total});
+    
+});
+
+router.post('/pedidos/add/enviar', async(req,res)=>{
+    if(pedido.length>0){
+        var Elementos=[];
+        for(var i in pedido){
+            Elementos.push({idElemento:pedido[i]["miid"],Cantidad:pedido[i]["micantidad"],Precio:pedido[i]["miprice"]});
+        }  
+        const idPedido = await Pedido.distinct('idPedido').count();
+        const newPedido=new Pedido({idPedido,Elementos,Total});
+            //newNote.user=req.user.id;
+        await newPedido.save();
+        req.flash('success_msg','Pedido #'+ idPedido+' added susccessfully');
+        
+        
+    }
+    else{
+        req.flash('error_msg', 'Pedido not add.');   
+        
+    }
+    res.render('pedidos/order');
+    
+
     
 });
 
 
 
 
+
 router.get('/pedidos/edit',(req,res)=>{
-    res.render('pedidos/ edit-order');
+    res.render('pedidos/edit-order');
 });
 
 
