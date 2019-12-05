@@ -40,18 +40,13 @@ router.get('/bebidas',isAuthenticated,  async (req, res) => {
 
 // Editar bebida
 
-router.get('/Bebidas/edit/:id',isAuthenticated, async (req, res) => {
+router.get('/Bebidas/edit/:id', async (req, res) => {
   const bebida = await Bebida.findById(req.params.id);
-  if(Bebida.user != req.user) {
-    req.flash('error_msg', 'Not Authorized');
-    return res.render('/Bebidas');
-  } 
   res.render('Bebidas/editar-Bebida', { bebida });
 });
 
-router.put('/Bebidas/editar-bebida/:id',isAuthenticated, async (req, res) => {
+router.put('/Bebidas/editar-bebida/:id', async (req, res) => {
   const { name, price } = req.body;
-  
   await Bebida.findByIdAndUpdate(req.params.id, {name, price});
   req.flash('success_msg', 'Bebida Actualizada con exito');
   res.redirect('/Bebidas');
