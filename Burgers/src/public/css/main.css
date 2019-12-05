@@ -1,0 +1,27 @@
+.body{
+    background: #fe8c00;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f83600, #fe8c00);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f83600, #fe8c00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+}
+.bodyContainer{
+    background: whitesmoke;
+}
+.logo{
+    width: 60%;
+}
+
+.colorCarrusel{
+    color: whitesmoke;
+    background: rgba(0, 0, 0, 0.411);
+}
+.miimg {
+   
+    height: 300px;
+    object-fit: cover;
+}
+.ingredientes{
+    font-size: 12px;
+    color: grey;
+    word-wrap: break-word;
+}

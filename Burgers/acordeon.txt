@@ -1,0 +1,7 @@
+npm i express express-handlebars express-session methods-override mongoose passport passport-local bcryptjs connect.flash
+
+node src/index.js
+
+npm i nodemon -D
+
+db.dropDatabase();
