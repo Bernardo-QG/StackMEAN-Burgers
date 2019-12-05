@@ -13,7 +13,7 @@ router.get('/pedidos',isAuthenticated,async(req,res)=>{
     pedido=[];
     Total=0;
     const pedidos = await Pedido.find().sort({date: 'desc'});
-    console.log(pedidos)
+
     res.render('pedidos/order',{pedidos});
 });
 
